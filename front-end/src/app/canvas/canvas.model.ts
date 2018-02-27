@@ -20,20 +20,25 @@ export class CanvasObject {
     }
 }
 
-export class TextObj {
-    value: string;
-    x: number;
-    y: number;
-    constructor(value: string, x?: number, y?: Number) {
-        this.value = value;
-    }
-}
 
 export class ImgObj {
     url: string;
     x: number;
     y: number;
-    constructor(url: string, x?: number, y?: Number) {
+    constructor(url: string, x?: number, y?: number) {
         this.url = url;
+        this.x = x || 0;
+        this.y = y || 0;
+    }
+}
+
+export class TextObj {
+    value: string;
+    x: number;
+    y: number;
+    constructor(value: string, x?: number, y?: number) {
+        this.value = value;
+        this.x = x || 0;
+        this.y = y || 0;
     }
 }

@@ -5,8 +5,8 @@ const multer = require( 'multer' );
 const fs = require( 'fs' );
 const junk = require( 'junk' );
 
-const ENV_HOST = 'http://localhost:4201';
-const ENV_API_PORT = 8001;
+const ENV_HOST = 'http://localhost:4200';
+const ENV_API_PORT = 8000;
 
 let app = express();
 let cors = require('cors');

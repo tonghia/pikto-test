@@ -3,7 +3,20 @@
 <div #canvas class="canvas">
   <div class="block">
       <!-- Add images and texts to here -->
-      <canvas-img *ngFor="let imgObj of canvasObj.imgArr" [imgObj]="imgObj"></canvas-img>
-      <canvas-txt *ngFor="let txtObj of canvasObj.textArr" [txtObj]="txtObj"></canvas-txt>
+      <canvas-img *ngFor="let imgObj of canvasObj.imgArr; let i = index" 
+                  class="canvas-elem"
+                  [style.top]="(imgObj.y + 'px')"
+                  [style.left]="imgObj.x + 'px'"
+                  (mousedown)="onMouseDownElem($event, i)"
+                  (mousemove)="onMouseMoveElem($event, i);$event.preventDefault()"
+                  (mouseup)="onMouseUpElem($event);$event.preventDefault()"
+                  (removeImage)=removeImage(i)
+                  [imgObj]="imgObj">
+      </canvas-img>
+      <canvas-txt *ngFor="let txtObj of canvasObj.textArr; let i = index" 
+                  class="canvas-elem" 
+                  (removeText)=removeText(i)
+                  [txtObj]="txtObj">
+      </canvas-txt>
   </div>
 </div>
