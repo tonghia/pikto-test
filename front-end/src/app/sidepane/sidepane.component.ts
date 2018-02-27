@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../core/api.service';
 import { FileUploader } from 'ng2-file-upload';
+import { environment } from '../../environments/environment';
+import { ApiService } from '../core/api.service';
+import { AppService } from '../core/app.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-sidepane',
@@ -9,13 +12,20 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class SidepaneComponent implements OnInit {
 
+  readonly API_URL = environment.apiUrl;
   images: any = [];
+  elementSubject: Subject<any>;
   public uploader:FileUploader = new FileUploader({
-    url: 'http://localhost:8000/uploads',
+    url: this.API_URL + 'uploads',
     // itemAlias: "uploader"
   });
-  
-  constructor(public apiService: ApiService) { }
+
+  constructor(
+    public apiService: ApiService,
+    public appService: AppService
+  ) {
+    this.elementSubject = this.appService.addElement;
+  }
 
   ngOnInit() {
     this.apiService.getImage().subscribe(res => {
@@ -33,5 +43,13 @@ export class SidepaneComponent implements OnInit {
       let uploadImage = this.uploader.queue[0];
       uploadImage.upload();
     }
+  }
+
+  onClickImg(imgUrl) {
+    this.elementSubject.next({imgUrl, type: 'image'});
+  }
+
+  onClickTxt(text) {
+    this.elementSubject.next({text, type: 'text'});
   }
 }

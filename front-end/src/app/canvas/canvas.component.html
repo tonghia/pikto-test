@@ -1,7 +1,9 @@
 
 <!-- canvas -->
-<div class="canvas">
+<div #canvas class="canvas">
   <div class="block">
       <!-- Add images and texts to here -->
+      <canvas-img *ngFor="let imgObj of canvasObj.imgArr" [imgObj]="imgObj"></canvas-img>
+      <canvas-txt *ngFor="let txtObj of canvasObj.textArr" [txtObj]="txtObj"></canvas-txt>
   </div>
 </div>

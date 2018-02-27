@@ -4,10 +4,14 @@ const express = require( 'express' );
 const multer = require( 'multer' );
 const fs = require( 'fs' );
 const junk = require( 'junk' );
+
+const ENV_HOST = 'http://localhost:4201';
+const ENV_API_PORT = 8001;
+
 let app = express();
 let cors = require('cors');
 
-app.use(cors({origin: 'http://localhost:4200', credentials: true}));
+app.use(cors({origin: ENV_HOST, credentials: true}));
 app.use( express.static('./') );
 
 // define file name and destination to save
@@ -69,6 +73,6 @@ app.get( '/', ( req, res ) => {
   res.sendFile( __dirname + '/index.html' );
 })
 
-var server = app.listen( 8000, _ => {
-  console.log( 'server started. listening to 8000' );
+var server = app.listen( ENV_API_PORT, _ => {
+  console.log( 'server started. listening to ' + ENV_API_PORT );
 })

@@ -3,23 +3,23 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 
-const API_URL = environment.apiUrl;
+// const API_URL = environment.apiUrl;
 
 @Injectable()
 export class ApiService {
 
+  readonly API_URL = environment.apiUrl;
   constructor(
     private http: HttpClient
   ) {
   }
 
   getImage() {
-    return this.http.get('http://localhost:8000/images');
+    return this.http.get(this.API_URL + 'images');
   }
 
   uploadImage(data) {
-    console.log(data);
-    return this.http.post('http://localhost:8000/uploads', data);
+    return this.http.post(this.API_URL + 'uploads', data);
   }
 
 }
