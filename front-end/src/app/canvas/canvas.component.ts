@@ -21,6 +21,9 @@ export class CanvasComponent implements OnInit {
   canvasWidth: number;
   canvasHeight: number;
 
+  activeElement;
+  activeImage;
+
   initialMouseX: number;
   initialMouseY: number;
 
@@ -55,42 +58,28 @@ export class CanvasComponent implements OnInit {
   }
 
   onMouseDownCanvas(event) {
-    // this.initialMouseX = event.clientX;
-    // this.initialMouseY = event.clientY;
   }
 
   onMouseMoveCanvas(event) {
-    // if (this.activeElement) {
-      // let mouseMoveX = event.clientX - this.initialMouseX;
-      // let mouseMoveY = event.clientY - this.initialMouseY;
-      // this.activeImage.x = mouseMoveX;
-      // this.activeImage.y = mouseMoveY;
-    // }
   }
 
   onMouseUpCanvas() {
-    // this.activeElement = null;
   }
 
   onMouseDownElem(event, i) {
     // console.log('offset' + e.offsetX, 'client' + e.clientX);
     // let imageElements = this.images.toArray();
-    // let activeElement = imageElements[i].nativeElement;
-    // this.activeElement = activeElement;
-    // console.dir(this.activeElement)
+    // this.activeElement = imageElements[i].nativeElement;
+    // console.dir(this.activeElement);
     // this.activeImage = this.canvasObj.imgArr[i];
     // console.log(this.activeImage);
-    event.preventDefault();
-    event.stopPropagation();
     this.initialMouseX = event.clientX;
     this.initialMouseY = event.clientY;
-    console.log(this.initialMouseX, this.initialMouseY);
+    console.log(this.initialMouseX, this.initialMouseY, new Date().getTime());
     this.isDragging = true;
   }
 
   onMouseMoveElem(event, i) {
-    event.preventDefault();
-    event.stopPropagation();
     // console.log('move', event);
     if (this.isDragging && this.initialMouseX !== null) {
       let mouseMoveX = event.clientX - this.initialMouseX;
@@ -99,16 +88,13 @@ export class CanvasComponent implements OnInit {
       let activeImage = this.canvasObj.imgArr[i];
       activeImage.x = mouseMoveX;
       activeImage.y = mouseMoveY;
-      console.log('hi', mouseMoveX, mouseMoveY, event.clientX, event.clientY);
+      console.log('hi', mouseMoveX, mouseMoveY, event.clientX, event.clientY, new Date().getTime());
     }
   }
 
   onMouseUpElem(event) {
-    event.preventDefault();
-    event.stopPropagation();
     // this.activeImage = null;
     this.isDragging = false;
-    this.initialMouseX = null;
     console.log('hello');
   }
 }

@@ -1,6 +1,9 @@
 
 <!-- canvas -->
-<div #canvas class="canvas">
+<div #canvas class="canvas" 
+    (mousedown)="null"
+    (mousemove)="null"
+    (mouseup)="null">
   <div class="block">
       <!-- Add images and texts to here -->
       <canvas-img *ngFor="let imgObj of canvasObj.imgArr; let i = index" 
@@ -8,8 +11,8 @@
                   [style.top]="(imgObj.y + 'px')"
                   [style.left]="imgObj.x + 'px'"
                   (mousedown)="onMouseDownElem($event, i)"
-                  (mousemove)="onMouseMoveElem($event, i);$event.preventDefault()"
-                  (mouseup)="onMouseUpElem($event);$event.preventDefault()"
+                  (mousemove)="onMouseMoveElem($event, i)"
+                  (mouseup)="onMouseUpElem($event)"
                   (removeImage)=removeImage(i)
                   [imgObj]="imgObj">
       </canvas-img>
