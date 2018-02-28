@@ -14,7 +14,6 @@ var FileSaver = require('file-saver');
 })
 export class CanvasComponent implements OnInit {
 
-  dataUri: string;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChildren(CanvasImageComponent, { read: ElementRef })
   images: QueryList<ElementRef>;
@@ -36,6 +35,7 @@ export class CanvasComponent implements OnInit {
   }
 
   ngOnInit() {
+    // listen from a Subject to receive Image or Text data (from SidePaneComponent)
     this.elementSubject.subscribe(elemData => {
       if (elemData.type === 'image') {
         this.canvasObj.addImage(elemData['imgUrl']);
@@ -46,6 +46,7 @@ export class CanvasComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    // get canvas info for fun (maybe we will need it if canvas has flexible size)
     this.canvasWidth = this.canvas.nativeElement.clientWidth;
     this.canvasHeight = this.canvas.nativeElement.clientHeight;
   }
@@ -58,8 +59,13 @@ export class CanvasComponent implements OnInit {
     this.canvasObj.textArr.splice(index, 1);
   }
 
+  /**
+   *
+   * @param event : MouseEvent
+   * @param i : Element index
+   * @param isImage : image or text?
+   */
   onMouseDownElem(event, i, isImage = true) {
-    event.preventDefault();
     let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
     this.initialMouseX = activeElem.x - event.clientX;
     this.initialMouseY = activeElem.y - event.clientY;
@@ -68,8 +74,13 @@ export class CanvasComponent implements OnInit {
     this.isDragImg = isImage;
   }
 
+  /**
+   * Calculate distant Mouse move and apply for active element
+   * @param event : MouseEvent
+   * @param i : number
+   * @param isImage : boolean
+   */
   onMouseMoveElem(event, i, isImage?) {
-    event.preventDefault();
     if (this.isDragging && this.activeIndex == i && this.isDragImg == isImage) {
       let mouseMoveX = event.clientX + this.initialMouseX;
       let mouseMoveY = event.clientY + this.initialMouseY;
@@ -80,38 +91,26 @@ export class CanvasComponent implements OnInit {
     }
   }
 
+  /**
+   * stop listen to mouse
+  */
   onMouseUpElem() {
     this.isDragging = false;
   }
 
-  onMouseDownElem2(event, i, isImage = true) {
-    event.preventDefault();
-    let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
-    this.initialMouseX = activeElem.x - event.clientX;
-    this.initialMouseY = activeElem.y - event.clientY;
-    this.isDragging = true;
-    this.activeIndex = i;
-    this.isDragImg = isImage;
-  }
-
-  onMouseMoveElem2(event, i, isImage?) {
-    if (this.isDragging && this.activeIndex == i && this.isDragImg == isImage) {
-      let mouseMoveX = event.clientX + this.initialMouseX;
-      let mouseMoveY = event.clientY + this.initialMouseY;
-
-      let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
-      activeElem.x = mouseMoveX;
-      activeElem.y = mouseMoveY;
-    }
-  }
-
+  /**
+   * Use FileSaver (from library) to download a json file contain data for current canvas
+  */
   export() {
     let json = JSON.stringify(this.canvasObj);
-    console.log(json);
     let blob = new Blob([json], {type:"application/json;charset=utf-8"});
     FileSaver.saveAs(blob, "export.json");
   }
 
+  /**
+   * read data from data file and create CanvasObject
+   * @param event : InputEvent
+   */
   import(event) {
     let file = event.target.files[0];
 
@@ -119,7 +118,6 @@ export class CanvasComponent implements OnInit {
     reader.onload = () => {
       let text = reader.result;
       this.canvasObj = new CanvasObject(JSON.parse(text));
-      console.log(text, this.canvasObj);
     };
 
     reader.readAsText(file);
