@@ -33,6 +33,21 @@ CanvasComponent
 
 ---
     Handle Logic for elements' behaviors.
+    - Use addElement Subject from AppService to listen to data from SidePaneComponent
+    - Contain 2 child component: CanvasTextComponent and CanvasImageComponent
+    - CanvasObject Model use for keeping consistent data and export as a .json file
+    - Handle move element by pure javascript Mouse Event
+
+ApiService
+
+---
+Contain all api request for the app
+
+AppService
+
+---
+Hold universal state for all components declared in AppModule
+
 
 ## Evaluate Features
 
