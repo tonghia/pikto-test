@@ -75,6 +75,7 @@ Below are the basic features for the application:
 | Good | Code and flow should be properly documented|
 | Bad  | Build automated test for the app|
 
+I understand the importance of testing, especially unit testing. I have always tried to learn to write front-end test cases, but to be honest, I don't have many opportunities to practices so in this test I cannot schedule time for testing.
 
 ## How To Install
 

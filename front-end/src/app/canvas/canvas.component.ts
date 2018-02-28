@@ -67,8 +67,10 @@ export class CanvasComponent implements OnInit {
    */
   onMouseDownElem(event, i, isImage = true) {
     let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
+
     this.initialMouseX = activeElem.x - event.clientX;
     this.initialMouseY = activeElem.y - event.clientY;
+
     this.isDragging = true;
     this.activeIndex = i;
     this.isDragImg = isImage;
@@ -81,6 +83,7 @@ export class CanvasComponent implements OnInit {
    * @param isImage : boolean
    */
   onMouseMoveElem(event, i, isImage?) {
+    event.stopPropagation();
     if (this.isDragging && this.activeIndex == i && this.isDragImg == isImage) {
       let mouseMoveX = event.clientX + this.initialMouseX;
       let mouseMoveY = event.clientY + this.initialMouseY;

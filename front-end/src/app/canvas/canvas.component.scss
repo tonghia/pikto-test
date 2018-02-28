@@ -5,4 +5,7 @@
     &:hover {
         border: 1px solid #333;
     }
+    &:active {
+        z-index: 100;
+    }
 }
