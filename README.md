@@ -29,31 +29,34 @@ CanvasComponent
 
 Below are the basic features for the application:
 
-Good | see the existing images from folder `images` to the images list
-Good | *upload image* to folder `images` and directly added to images list
-Good | *add image / text* from the menu to the canvas
-OK   | *move and delete the image / text* inside the canvas
-Good | the created objects on canvas can be saved and repopulated on refresh browser
+| Evaluate | Feature |
+|-----------|:-----------:|
+| Good | see the existing images from folder `images` to the images list |
+| Good | *upload image* to folder `images` and directly added to images list |
+| Good | *add image / text* from the menu to the canvas |
+| OK   | *move and delete the image / text* inside the canvas |
+| Good | the created objects on canvas can be saved and repopulated on refresh browser |
 
 *move features is not perfect, it is slow
 
 
 ## Evaluate Requirements
 
+| Heading 1 | Heading 2 |
+|-----------|:-----------:|
+| Good | - App should have the features listed [above](#features)|
 
-Good | - App should have the features listed [above](#features)
+| Good | - App should work on modern browsers (Chrome / Firefox)|
 
-Good | - App should work on modern browsers (Chrome / Firefox)
+| Good | - App logic and data flow are written in a functional and reactive programming concept
 
-Good | - App logic and data flow are written in a functional and reactive programming concept
+        Separate the logic between application data state and template view / user interactions (unidirectional data flow).|
 
-        Separate the logic between application data state and template view / user interactions (unidirectional data flow).
+| OK   | - Use libraries as less as possible|
 
-OK   | - Use libraries as less as possible
+| Good | - Code and flow should be properly documented|
 
-Good | - Code and flow should be properly documented
-
-Bad  | - Build automated test for the app
+| Bad  | - Build automated test for the app|
 
 
 ## How To Install
