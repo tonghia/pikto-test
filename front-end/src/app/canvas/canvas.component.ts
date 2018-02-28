@@ -4,6 +4,8 @@ import { AppService } from '../core/app.service';
 import { Subject } from 'rxjs/Subject';
 import { CanvasImageComponent } from './canvas-img.component';
 
+var FileSaver = require('file-saver');
+
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -11,23 +13,22 @@ import { CanvasImageComponent } from './canvas-img.component';
 })
 export class CanvasComponent implements OnInit {
 
+  dataUri: string;
   @ViewChild('canvas') canvas: ElementRef;
-  @ViewChildren(CanvasImageComponent, { read: ElementRef }) 
+  @ViewChildren(CanvasImageComponent, { read: ElementRef })
   images: QueryList<ElementRef>;
 
-  // imageElements = [];
   canvasObj = new CanvasObject();
   elementSubject: Subject<any>;
   canvasWidth: number;
   canvasHeight: number;
 
-  activeElement;
-  activeImage;
-
   initialMouseX: number;
   initialMouseY: number;
 
   isDragging = false;
+  activeIndex;
+  isDragImg = true;
 
   constructor(public appService: AppService) {
     this.elementSubject = this.appService.addElement;
@@ -44,7 +45,6 @@ export class CanvasComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    // this.imageElements = this.images.toArray();
     this.canvasWidth = this.canvas.nativeElement.clientWidth;
     this.canvasHeight = this.canvas.nativeElement.clientHeight;
   }
@@ -57,44 +57,71 @@ export class CanvasComponent implements OnInit {
     this.canvasObj.textArr.splice(index, 1);
   }
 
-  onMouseDownCanvas(event) {
-  }
-
-  onMouseMoveCanvas(event) {
-  }
-
-  onMouseUpCanvas() {
-  }
-
-  onMouseDownElem(event, i) {
-    // console.log('offset' + e.offsetX, 'client' + e.clientX);
-    // let imageElements = this.images.toArray();
-    // this.activeElement = imageElements[i].nativeElement;
-    // console.dir(this.activeElement);
-    // this.activeImage = this.canvasObj.imgArr[i];
-    // console.log(this.activeImage);
-    this.initialMouseX = event.clientX;
-    this.initialMouseY = event.clientY;
-    console.log(this.initialMouseX, this.initialMouseY, new Date().getTime());
+  onMouseDownElem(event, i, isImage = true) {
+    event.preventDefault();
+    let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
+    this.initialMouseX = activeElem.x - event.clientX;
+    this.initialMouseY = activeElem.y - event.clientY;
     this.isDragging = true;
+    this.activeIndex = i;
+    this.isDragImg = isImage;
   }
 
-  onMouseMoveElem(event, i) {
-    // console.log('move', event);
-    if (this.isDragging && this.initialMouseX !== null) {
-      let mouseMoveX = event.clientX - this.initialMouseX;
-      let mouseMoveY = event.clientY - this.initialMouseY;
+  onMouseMoveElem(event, i, isImage?) {
+    event.preventDefault();
+    if (this.isDragging && this.activeIndex == i && this.isDragImg == isImage) {
+      let mouseMoveX = event.clientX + this.initialMouseX;
+      let mouseMoveY = event.clientY + this.initialMouseY;
 
-      let activeImage = this.canvasObj.imgArr[i];
-      activeImage.x = mouseMoveX;
-      activeImage.y = mouseMoveY;
-      console.log('hi', mouseMoveX, mouseMoveY, event.clientX, event.clientY, new Date().getTime());
+      let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
+      activeElem.x = mouseMoveX;
+      activeElem.y = mouseMoveY;
     }
   }
 
-  onMouseUpElem(event) {
-    // this.activeImage = null;
+  onMouseUpElem() {
     this.isDragging = false;
-    console.log('hello');
   }
+
+  onMouseDownElem2(event, i, isImage = true) {
+    event.preventDefault();
+    let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
+    this.initialMouseX = activeElem.x - event.clientX;
+    this.initialMouseY = activeElem.y - event.clientY;
+    this.isDragging = true;
+    this.activeIndex = i;
+    this.isDragImg = isImage;
+  }
+
+  onMouseMoveElem2(event, i, isImage?) {
+    if (this.isDragging && this.activeIndex == i && this.isDragImg == isImage) {
+      let mouseMoveX = event.clientX + this.initialMouseX;
+      let mouseMoveY = event.clientY + this.initialMouseY;
+
+      let activeElem = isImage ? this.canvasObj.imgArr[i] : this.canvasObj.textArr[i];
+      activeElem.x = mouseMoveX;
+      activeElem.y = mouseMoveY;
+    }
+  }
+
+  export() {
+    let json = JSON.stringify(this.canvasObj);
+    console.log(json);
+    let blob = new Blob([json], {type:"application/json;charset=utf-8"});
+    FileSaver.saveAs(blob, "export.json");
+  }
+
+  import(event) {
+    let file = event.target.files[0];
+
+    let reader = new FileReader();
+    reader.onload = () => {
+      let text = reader.result;
+      this.canvasObj = new CanvasObject(JSON.parse(text));
+      console.log(text, this.canvasObj);
+    };
+      
+    reader.readAsText(file);
+  }
+
 }

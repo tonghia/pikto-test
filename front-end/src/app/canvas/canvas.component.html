@@ -1,23 +1,30 @@
 
 <!-- canvas -->
-<div #canvas class="canvas" 
-    (mousedown)="null"
-    (mousemove)="null"
-    (mouseup)="null">
+<div #canvas class="canvas">
+  <div class="d-flex justify-content-around align-items-center">
+    <span class="mr-2">Import:</span>
+    <input type="file" class="form-control" name="import" (change)="import($event)">
+    <button class="btn btn-default ml-4" (click)="export()">Export</button>
+  </div>
   <div class="block">
       <!-- Add images and texts to here -->
       <canvas-img *ngFor="let imgObj of canvasObj.imgArr; let i = index" 
                   class="canvas-elem"
-                  [style.top]="(imgObj.y + 'px')"
+                  [style.top]="imgObj.y + 'px'"
                   [style.left]="imgObj.x + 'px'"
-                  (mousedown)="onMouseDownElem($event, i)"
-                  (mousemove)="onMouseMoveElem($event, i)"
-                  (mouseup)="onMouseUpElem($event)"
+                  (mousedown)="onMouseDownElem($event, i, true)"
+                  (mousemove)="onMouseMoveElem($event, i, true)"
+                  (mouseup)="onMouseUpElem()"
                   (removeImage)=removeImage(i)
                   [imgObj]="imgObj">
       </canvas-img>
       <canvas-txt *ngFor="let txtObj of canvasObj.textArr; let i = index" 
                   class="canvas-elem" 
+                  [style.top]="txtObj.y + 'px'"
+                  [style.left]="txtObj.x + 'px'"
+                  (mousedown)="onMouseDownElem($event, i, false)"
+                  (mousemove)="onMouseMoveElem($event, i, false)"
+                  (mouseup)="onMouseUpElem()"
                   (removeText)=removeText(i)
                   [txtObj]="txtObj">
       </canvas-txt>

@@ -2,11 +2,11 @@ export class CanvasObject {
     imgArr: Array<ImgObj>;
     textArr: Array<TextObj>;
     constructor(options: {
-        images?: Array<ImgObj>,
-        texts?: Array<TextObj>
+        imgArr?: Array<ImgObj>,
+        textArr?: Array<TextObj>
     } = {}) {
-        this.imgArr = options.images || [];
-        this.textArr = options.texts || [];
+        this.imgArr = options.imgArr || [];
+        this.textArr = options.textArr || [];
     }
 
     addImage(url: string) {
