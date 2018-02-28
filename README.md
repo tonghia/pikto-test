@@ -44,13 +44,12 @@ Below are the basic features for the application:
 
 | Evaluate | Requirement |
 |-----------|:-----------:|
-| Good | - App should have the features listed |
-| Good | - App should work on modern browsers (Chrome / Firefox)|
-| Good | - App logic and data flow are written in a functional and reactive programming concept
-        Separate the logic between application data state and template view / user interactions (unidirectional data flow).|
-| OK   | - Use libraries as less as possible|
-| Good | - Code and flow should be properly documented|
-| Bad  | - Build automated test for the app|
+| Good | App should have the features listed |
+| Good | App should work on modern browsers (Chrome / Firefox)|
+| Good | App logic and data flow are written in a functional and reactive programming concept. Separate the logic between pplication data state and template view / user interactions (unidirectional data flow).|
+| OK   | Use libraries as less as possible|
+| Good | Code and flow should be properly documented|
+| Bad  | Build automated test for the app|
 
 
 ## How To Install
