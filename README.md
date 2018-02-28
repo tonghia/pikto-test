@@ -8,6 +8,8 @@ Libraries: Bootstrap for styles, NgFileUpload to get image data from front-end, 
 
 Let start from front-end/src/app
 AppModule (app.module.ts)
+
+---
     - bootstrap: initialize root component which is AppComponent
     - imports: add other module which add more components to declarations, providers array
     - declarations: declare View components use in this module
