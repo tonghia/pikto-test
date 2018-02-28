@@ -7,6 +7,7 @@ Libraries: Bootstrap for styles, NgFileUpload to get image data from front-end, 
 ## App flow
 
 Let start from front-end/src/app
+
 AppModule (app.module.ts)
 
 ---
@@ -16,15 +17,21 @@ AppModule (app.module.ts)
     - provides: inject Service (Singleton pattern) which can be shared by all components in this module
 
 AppComponent
+
+---
     - In app.component.html : the AppComponent use 2 child components - SidePaneComponent, CanvasComponent
 
 SidePaneComponent
+
+---
     Handle Upload Images and adding Elements (Images, Texts) into Canvas Component
     - SidePaneComponent inject AppService which is a Singleton Object share by both SidePane and Canvas Components
     - When an elements in SidePaneComponent is select, it call AppService addElement (an Subject object of RXJS)
     addElement will fire and event and pass data to any chanel which is listening to it.
 
 CanvasComponent
+
+---
     Handle Logic for elements' behaviors.
 
 ## Evaluate Features
