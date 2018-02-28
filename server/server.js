@@ -6,7 +6,7 @@ const fs = require( 'fs' );
 const junk = require( 'junk' );
 
 const ENV_HOST = 'http://localhost:4200';
-const ENV_API_PORT = 8000;
+const ENV_API_PORT = 8001;
 
 let app = express();
 let cors = require('cors');

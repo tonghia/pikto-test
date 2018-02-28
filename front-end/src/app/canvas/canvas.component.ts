@@ -4,6 +4,7 @@ import { AppService } from '../core/app.service';
 import { Subject } from 'rxjs/Subject';
 import { CanvasImageComponent } from './canvas-img.component';
 
+declare var require: any
 var FileSaver = require('file-saver');
 
 @Component({
@@ -120,7 +121,7 @@ export class CanvasComponent implements OnInit {
       this.canvasObj = new CanvasObject(JSON.parse(text));
       console.log(text, this.canvasObj);
     };
-      
+
     reader.readAsText(file);
   }
 
